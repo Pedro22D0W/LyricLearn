@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 interface YoutubeApiService {
 
-    // search.list endpoint
+    // searchlist endpoint
     @GET("youtube/v3/search")
     suspend fun searchVideos(
         @Query("part") part: String = "snippet",
