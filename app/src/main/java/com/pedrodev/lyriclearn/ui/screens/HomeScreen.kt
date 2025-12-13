@@ -5,21 +5,25 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.dp
 import com.pedrodev.lyriclearn.domain.models.Video
 import com.pedrodev.lyriclearn.ui.components.BottomBar
+import com.pedrodev.lyriclearn.ui.components.SearchBar
 import com.pedrodev.lyriclearn.ui.components.SearchResult
 
 @Composable
 fun HomeSreen(){
+    var query by remember { mutableStateOf("") }
     Scaffold(
+
         bottomBar = { BottomBar() }
     ) { innerPadding ->
         Column(
@@ -27,15 +31,11 @@ fun HomeSreen(){
                 .fillMaxSize()
                 .padding(innerPadding)
                 .background(Color(0xFF121212))
+                .padding(5.dp)
         ) {
+            SearchBar(title = "Search",query = query, onQueryChange = { query = it })
             Column {
-                Text(
-                    text = "Search",
-                    color = Color(0xFFFFFFFF),
-                    fontSize = 28.sp,
-                    fontFamily = FontFamily.SansSerif, //mudar para Inter
-                    fontWeight = FontWeight.Bold
-                )
+
                 for(i in 0..9) {
                     SearchResult(
                         Video(
