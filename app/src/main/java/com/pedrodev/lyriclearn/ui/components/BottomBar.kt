@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 fun BottomBar(){
     BottomAppBar(containerColor = Color(0xFF282828),
         contentColor = Color(0xFF717171),
-        modifier = Modifier.height(50.dp)
+        modifier = Modifier.height(100.dp)
         ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

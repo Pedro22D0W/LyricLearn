@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,12 +24,14 @@ import com.pedrodev.lyriclearn.domain.models.Video
 
 @Composable
 fun SearchResult(video: Video){
-
+    Surface(
+        modifier = Modifier.padding(5.dp)
+    )
+    {
         Row(
             modifier = Modifier.fillMaxWidth()
                 .background(Color(0xFF121212))
-                .height(50.dp)
-                .padding(5.dp),
+                .height(50.dp),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         )
@@ -60,6 +63,7 @@ fun SearchResult(video: Video){
         }
     }
 
+}
 
 
 

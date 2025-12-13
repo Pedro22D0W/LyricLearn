@@ -31,12 +31,13 @@ fun HomeSreen(){
                 .fillMaxSize()
                 .padding(innerPadding)
                 .background(Color(0xFF121212))
-                .padding(5.dp)
         ) {
             SearchBar(title = "Search",query = query, onQueryChange = { query = it })
-            Column {
+            Column(
+                modifier = Modifier.padding(vertical = 5.dp)
+            ){
 
-                for(i in 0..9) {
+                for(i in 0..5) {
                     SearchResult(
                         Video(
                             "7wtfhZwyrcc",
