@@ -6,22 +6,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.pedrodev.lyriclearn.domain.models.Video
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pedrodev.lyriclearn.ui.components.BottomBar
 import com.pedrodev.lyriclearn.ui.components.SearchBar
 import com.pedrodev.lyriclearn.ui.components.SearchResult
+import com.pedrodev.lyriclearn.ui.vm.HomeScreenViewModel
 
 @Composable
-fun HomeSreen(){
-    var query by remember { mutableStateOf("") }
+fun HomeScreen(){
+    val viewModel = viewModel<HomeScreenViewModel>()
+    val query by viewModel.query.collectAsState()
+    val videos by viewModel.videos.collectAsState()
+
     Scaffold(
 
         bottomBar = { BottomBar() }
@@ -32,21 +34,13 @@ fun HomeSreen(){
                 .padding(innerPadding)
                 .background(Color(0xFF121212))
         ) {
-            SearchBar(title = "Search",query = query, onQueryChange = { query = it })
+            SearchBar(title = "Search",query = query, onQueryChange = viewModel::onQueryChange)
             Column(
                 modifier = Modifier.padding(vertical = 5.dp)
             ){
 
-                for(i in 0..5) {
-                    SearchResult(
-                        Video(
-                            "7wtfhZwyrcc",
-                            "Imagine Dragons - Believer (Official Music Video)",
-                            "ImagineDragonsVEVO",
-                            "https://i.ytimg.com/vi/7wtfhZwyrcc/mqdefault.jpg"
-
-                        )
-                    )
+                for(video in videos) {
+                    SearchResult(video)
                 }
             }
 
@@ -59,5 +53,5 @@ fun HomeSreen(){
 @Preview
 @Composable
 fun HomeScreenPreview(){
-    HomeSreen()
+    HomeScreen()
 }

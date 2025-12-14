@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.pedrodev.lyriclearn.ui.screens.HomeScreenPreview
+import com.pedrodev.lyriclearn.ui.screens.HomeScreen
 import com.pedrodev.lyriclearn.ui.theme.LyricLearnTheme
 
 
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             LyricLearnTheme {
-                HomeScreenPreview()
+                HomeScreen()
             }
 
         }
