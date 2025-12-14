@@ -4,8 +4,9 @@ import com.pedrodev.lyriclearn.data.remote.YoutubeApiService
 import com.pedrodev.lyriclearn.data.util.videoDtoMapper
 import com.pedrodev.lyriclearn.domain.models.Video
 import com.pedrodev.lyriclearn.domain.repository.VideoRepository
+import javax.inject.Inject
 
-class VideoRepositoryImpl(
+class VideoRepositoryImpl @Inject constructor(
     private val youtubeApiService: YoutubeApiService
 ): VideoRepository {
 

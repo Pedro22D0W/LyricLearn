@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.pedrodev.lyriclearn.ui.components.BottomBar
 import com.pedrodev.lyriclearn.ui.components.SearchBar
 import com.pedrodev.lyriclearn.ui.components.SearchResult
@@ -20,7 +20,7 @@ import com.pedrodev.lyriclearn.ui.vm.HomeScreenViewModel
 
 @Composable
 fun HomeScreen(){
-    val viewModel = viewModel<HomeScreenViewModel>()
+    val viewModel: HomeScreenViewModel = hiltViewModel()
     val query by viewModel.query.collectAsState()
     val videos by viewModel.videos.collectAsState()
 

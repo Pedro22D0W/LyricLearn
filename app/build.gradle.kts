@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -73,16 +75,24 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     //retrofit to HTTP requests
-    // Retrofit (estável)
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
 
-// Converter JSON -> Kotlin (Gson ou Moshi). escolha um; aqui uso Gson:
+    // Convert JSON
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
-// OkHttp core (necessário) + logging interceptor
+    // logging interceptor to modify request and add api key
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
+    //coil to Async images by url
     implementation("io.coil-kt:coil-compose:2.4.0")
+
+    //viewmodel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1")
+
+    //Hilt, dependency incejtor framework(DI)
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    ksp("com.google.dagger:hilt-compiler:2.51.1")
 
 }
