@@ -36,5 +36,4 @@ class HomeScreenViewModel@Inject constructor(private val videoRepository : Video
         }
 
     }
-
 }

@@ -1,6 +1,7 @@
 package com.pedrodev.lyriclearn.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,9 +24,11 @@ import coil.compose.AsyncImage
 import com.pedrodev.lyriclearn.domain.models.Video
 
 @Composable
-fun SearchResult(video: Video){
+fun SearchResult(video: Video,onClick: () -> Unit){
     Surface(
-        modifier = Modifier.padding(5.dp)
+        modifier = Modifier
+            .padding(5.dp)
+            .clickable { onClick() }
     )
     {
         Row(
@@ -70,10 +73,13 @@ fun SearchResult(video: Video){
 @Preview
 @Composable
 fun SearchResultPreview(){
+    fun onClickPreview(){
+
+    }
     SearchResult(Video(
         "7wtfhZwyrcc",
         "Imagine Dragons - Believer (Official Music Video)",
         "ImagineDragonsVEVO",
         "https://i.ytimg.com/vi/7wtfhZwyrcc/mqdefault.jpg"
-    ))
+    ), { onClickPreview() })
 }

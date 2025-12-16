@@ -95,4 +95,8 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     ksp("com.google.dagger:hilt-compiler:2.51.1")
 
+    //navigation, to change screens
+    val nav_version = "2.9.6"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
 }

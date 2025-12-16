@@ -15,4 +15,12 @@ interface YoutubeApiService {
         @Query("q") query: String,
         @Query("pageToken") pageToken: String? = null,
     ): SearchResponseDto
+    @GET("youtube/v3/search")
+    suspend fun searchVideoById(
+        @Query("part") part: String = "snippet",
+        @Query("type") type: String = "video",
+        @Query("maxResults") maxResults: Int = 1,
+        @Query("q") videoId: String,
+        @Query("pageToken") pageToken: String? = null,
+    ): SearchResponseDto
 }

@@ -14,4 +14,10 @@ class VideoRepositoryImpl @Inject constructor(
         val videos = videoDtoMapper(youtubeApiService.searchVideos(query = query))
         return videos
     }
+
+    override suspend fun searchVideoById(videoId: String): Video {
+        val video_list = videoDtoMapper(youtubeApiService.searchVideoById(videoId = videoId))
+        val video = video_list.get(0)
+        return video
+    }
 }

@@ -4,4 +4,5 @@ import com.pedrodev.lyriclearn.domain.models.Video
 
 interface VideoRepository {
     suspend fun searchVideos(query: String): List<Video>
+    suspend fun searchVideoById(videoId: String): Video
 }

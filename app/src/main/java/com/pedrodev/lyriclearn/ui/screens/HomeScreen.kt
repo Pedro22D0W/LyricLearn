@@ -17,10 +17,16 @@ import com.pedrodev.lyriclearn.ui.components.BottomBar
 import com.pedrodev.lyriclearn.ui.components.SearchBar
 import com.pedrodev.lyriclearn.ui.components.SearchResult
 import com.pedrodev.lyriclearn.ui.vm.HomeScreenViewModel
+import com.pedrodev.lyriclearn.ui.vm.PlayerScreenViewModel
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    onNavigateToPlayer: (String) -> Unit,
+    onNavigateToFavorites: () -> Unit
+){
     val viewModel: HomeScreenViewModel = hiltViewModel()
+    val playerViewModel: PlayerScreenViewModel = hiltViewModel()
+    val selectedVideo by playerViewModel.selectedVideo.collectAsState()
     val query by viewModel.query.collectAsState()
     val videos by viewModel.videos.collectAsState()
 
@@ -40,7 +46,10 @@ fun HomeScreen(){
             ){
 
                 for(video in videos) {
-                    SearchResult(video)
+                    SearchResult(
+                        video = video,
+                        onClick = { onNavigateToPlayer(video.videoId)}
+                    )
                 }
             }
 
@@ -53,5 +62,8 @@ fun HomeScreen(){
 @Preview
 @Composable
 fun HomeScreenPreview(){
-    HomeScreen()
+    HomeScreen(
+        onNavigateToPlayer = {},
+        onNavigateToFavorites = {}
+    )
 }
