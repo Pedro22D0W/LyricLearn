@@ -99,4 +99,6 @@ dependencies {
     val nav_version = "2.9.6"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+    //youtube player
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:13.0.0")
 }
