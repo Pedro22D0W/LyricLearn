@@ -36,12 +36,8 @@ O LyricLearn foi desenvolvido com o objetivo de explorar o aprendizado de idioma
 * É necessário acesso à internet para reprodução dos vídeos e carregamento das legendas
 * O app utiliza conteúdos públicos do YouTube
 
----
 
-## 👤 Autor
 
-**Pedro Rodolfo**
-Estudante de Engenharia da Computação – PUCC
 
 
 
