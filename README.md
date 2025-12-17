@@ -31,8 +31,6 @@ O LyricLearn foi desenvolvido com o objetivo de explorar o aprendizado de idioma
 
 
 
----
-
 ## 📌 Observações
 
 * É necessário acesso à internet para reprodução dos vídeos e carregamento das legendas
