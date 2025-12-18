@@ -1,6 +1,7 @@
 package com.pedrodev.lyriclearn.di
 
 import com.pedrodev.lyriclearn.BuildConfig
+import com.pedrodev.lyriclearn.data.remote.LrclibApiService
 import com.pedrodev.lyriclearn.data.remote.YoutubeApiService
 import dagger.Module
 import dagger.Provides
@@ -50,5 +51,28 @@ class NetworkModule {
     return retrofit.create(YoutubeApiService::class.java)
 
 }
+    @Provides
+    @Singleton
+    fun provideLrclibApiService(): LrclibApiService {
+
+        //Build http client with interceptors
+        val client = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .callTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+
+        //Instance the Interfacie Retrofit LrclibApiSrvice
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://lrclib.net/")
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        return retrofit.create(LrclibApiService::class.java)
+
+    }
 
 }

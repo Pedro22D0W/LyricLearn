@@ -25,6 +25,7 @@ fun PlayerScreen(videoId: String) {
 
     LaunchedEffect(videoId) {
         viewModel.loadVideo(videoId)
+        viewModel.loadLyric("Imagine Dragons","Believer")
     }
 
     Scaffold(
@@ -39,6 +40,9 @@ fun PlayerScreen(videoId: String) {
         ) {
             viewModel.selectedVideo.collectAsState().value?.let { video ->
                 PlayerCard(video)
+            } ?: Text("Carregando...")
+            viewModel.lyric.collectAsState().value?.let { lyric ->
+                Text(text = lyric.lyricWords[1].text)
             } ?: Text("Carregando...")
         }
     }
