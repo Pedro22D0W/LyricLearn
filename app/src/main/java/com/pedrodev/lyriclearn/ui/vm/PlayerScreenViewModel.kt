@@ -23,6 +23,31 @@ class PlayerScreenViewModel@Inject constructor(
     private var _lyric = MutableStateFlow<Lyric?>(null)
     val lyric = _lyric.asStateFlow()
 
+    private var _canLoadLyrics = MutableStateFlow(true)
+    val canLoadLyrics = _canLoadLyrics.asStateFlow()
+
+    private var _loadedMusic = MutableStateFlow(false)
+    val loadedMusic= _loadedMusic.asStateFlow()
+
+    fun loadMusic(videoId: String){
+        viewModelScope.launch {
+            _loadedMusic.value = false
+
+            val video = videoRepository.searchVideoById(videoId)
+            _selectedVideo.value = video
+
+            lyricRepository.searchLyric(video)
+                .onSuccess {
+                    _lyric.value = it
+                    _canLoadLyrics.value = true
+                }
+                .onFailure {
+                    _canLoadLyrics.value = false
+                }
+            _loadedMusic.value = true
+        }
+
+    }
     fun loadVideo(videoId: String){
         viewModelScope.launch {
             if (videoId.isNotBlank()) {
@@ -32,10 +57,17 @@ class PlayerScreenViewModel@Inject constructor(
         }
     }
 
-    fun loadLyric(artist_name:String,track_name:String){
+    fun loadLyric(){
+        val video = _selectedVideo.value ?: return
         viewModelScope.launch {
-                val result = lyricRepository.searchLyric(artist_name,track_name)
-                _lyric.value = result
+                lyricRepository.searchLyric(video)
+                    .onSuccess {
+                    _lyric.value = it
+                        _canLoadLyrics.value = true
+                }
+                    .onFailure {
+                        _canLoadLyrics.value = false
+                    }
         }
     }
 }

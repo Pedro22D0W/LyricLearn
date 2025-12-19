@@ -6,13 +6,31 @@ import com.pedrodev.lyriclearn.domain.repository.LyricRepository
 import javax.inject.Inject
 
 import com.pedrodev.lyriclearn.data.util.lyricDtoMapper
+import com.pedrodev.lyriclearn.data.util.normalizationTitleTrack
+import com.pedrodev.lyriclearn.domain.models.Video
+
 class LyricRepositoryImpl @Inject constructor(
     private val lrclibApiService: LrclibApiService
 ) : LyricRepository {
+    override suspend fun searchLyric(video: Video): Result<Lyric> {
+       val lyricRequestDto = normalizationTitleTrack(video)
 
-    override suspend fun searchLyric(artist_name: String, track_name: String): Lyric {
-        val lyricDto = lrclibApiService.searchLyric(artist_name,track_name)
-        val lyric = lyricDtoMapper(lyricDto)
-        return lyric
-    }
+        return try {
+            if(lyricRequestDto != null) {
+                val response = lrclibApiService.searchLyric(
+                    lyricRequestDto.artist_name,
+                    lyricRequestDto.track_name
+                )
+                val lyric = lyricDtoMapper(response)
+                Result.success(lyric)
+
+            }else{
+                Result.failure(IllegalStateException("Não foi possível normalizar o vídeo"))
+            }
+
+
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+        }
 }

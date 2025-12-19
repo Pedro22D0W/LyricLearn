@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,11 +22,14 @@ import com.pedrodev.lyriclearn.ui.vm.PlayerScreenViewModel
 @Composable
 fun PlayerScreen(videoId: String) {
     val viewModel: PlayerScreenViewModel = hiltViewModel()
-    val video = viewModel.selectedVideo.collectAsState()
+
+    val loadedMusic by viewModel.loadedMusic.collectAsState()
+    val canLoadLyrics by viewModel.canLoadLyrics.collectAsState()
+    val selectedVideo by viewModel.selectedVideo.collectAsState()
+    val lyric by viewModel.lyric.collectAsState()
 
     LaunchedEffect(videoId) {
-        viewModel.loadVideo(videoId)
-        viewModel.loadLyric("Imagine Dragons","Believer")
+        viewModel.loadMusic(videoId)
     }
 
     Scaffold(
@@ -38,12 +42,26 @@ fun PlayerScreen(videoId: String) {
                 .padding(innerPadding)
                 .background(Color(0xFF121212))
         ) {
-            viewModel.selectedVideo.collectAsState().value?.let { video ->
-                PlayerCard(video)
-            } ?: Text("Carregando...")
-            viewModel.lyric.collectAsState().value?.let { lyric ->
-                Text(text = lyric.lyricWords[1].text)
-            } ?: Text("Carregando...")
+            if (loadedMusic) {
+
+                if (canLoadLyrics) {
+
+                    selectedVideo?.let { video ->
+                        PlayerCard(video)
+
+                        lyric?.let {
+                            for(word in it.lyricWords)
+                            Text(text = word.text)
+                        }
+                    }
+
+                } else {
+                    Text("não foi possível carregar as legendas")
+                }
+
+            } else {
+                Text("Carregando...")
+            }
         }
     }
 }
