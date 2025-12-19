@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pedrodev.lyriclearn.ui.components.BottomBar
+import com.pedrodev.lyriclearn.ui.components.LyricBox
 import com.pedrodev.lyriclearn.ui.components.PlayerCard
 import com.pedrodev.lyriclearn.ui.vm.PlayerScreenViewModel
 
@@ -49,9 +50,8 @@ fun PlayerScreen(videoId: String) {
                     selectedVideo?.let { video ->
                         PlayerCard(video)
 
-                        lyric?.let {
-                            for(word in it.lyricWords)
-                            Text(text = word.text)
+                        lyric?.let{ lyric ->
+                            LyricBox(lyric)
                         }
                     }
 
