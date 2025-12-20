@@ -9,9 +9,12 @@ import javax.inject.Inject
 class VideoRepositoryImpl @Inject constructor(
     private val youtubeApiService: YoutubeApiService
 ): VideoRepository {
+    private val cache = mutableMapOf<String, List<Video>>()
 
     override suspend fun searchVideos(query: String): List<Video> {
+        cache[query]?.let { return it }
         val videos = videoDtoMapper(youtubeApiService.searchVideos(query = query))
+        cache[query] = videos
         return videos
     }
 

@@ -1,5 +1,6 @@
 package com.pedrodev.lyriclearn.ui.vm
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pedrodev.lyriclearn.domain.models.Lyric
@@ -9,6 +10,7 @@ import com.pedrodev.lyriclearn.domain.repository.VideoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,28 +48,26 @@ class PlayerScreenViewModel@Inject constructor(
                 }
             _loadedMusic.value = true
         }
-
-    }
-    fun loadVideo(videoId: String){
-        viewModelScope.launch {
-            if (videoId.isNotBlank()) {
-                val result = videoRepository.searchVideoById(videoId)
-                _selectedVideo.value = result
-            }
-        }
     }
 
-    fun loadLyric(){
-        val video = _selectedVideo.value ?: return
-        viewModelScope.launch {
-                lyricRepository.searchLyric(video)
-                    .onSuccess {
-                    _lyric.value = it
-                        _canLoadLyrics.value = true
+    fun onWordChange(index: Int, value: String) {
+
+        _lyric.update { lyric ->
+            lyric?.let {
+                val word = it.lyricWords[index]
+
+                if (word.hidden && word.text == value) {
+                    it.copy(
+                        lyricWords = it.lyricWords.toMutableList().also { list ->
+                            list[index] = word.copy(
+                                hidden = false
+                            )
+                        }
+                    )
+                } else {
+                    it // nenhuma mudança → nenhum emit → nenhuma recomposição
                 }
-                    .onFailure {
-                        _canLoadLyrics.value = false
-                    }
+            }
         }
     }
 }

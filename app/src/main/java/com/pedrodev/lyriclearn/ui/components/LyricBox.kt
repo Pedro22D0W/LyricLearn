@@ -19,14 +19,17 @@ import com.pedrodev.lyriclearn.domain.models.Lyric
 import com.pedrodev.lyriclearn.domain.models.LyricWord
 
 @Composable
-fun LyricBox(lyric: Lyric){
+fun LyricBox(
+    lyric: Lyric,
+    onWordChange: (Int,String) -> Unit
+){
 
 
 
     Box(modifier = Modifier
         .padding(5.dp)
         .fillMaxWidth()
-        .height(100.dp)
+        .height(150.dp)
         .background(Color(0xFF525151),shape = RoundedCornerShape(12.dp))
     ){
         FlowRow(
@@ -35,8 +38,8 @@ fun LyricBox(lyric: Lyric){
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center
         ) {
-            for (word in lyric.lyricWords){
-                LyricWord(word)
+            lyric.lyricWords.forEachIndexed { index, word ->
+                LyricWord(index,word,onWordChange = onWordChange)
             }
         }
     }
@@ -48,10 +51,10 @@ fun LyricBoxPreview(){
     val lyricPreview = Lyric(
         listOf(
             LyricWord("Frist",false),
-            LyricWord("Frist",true),
+            LyricWord("my",true),
             LyricWord("Frist",false),
-            LyricWord("a Very big word",true),
-            LyricWord("thenextwillbeasmall",true),
+            LyricWord("a Ver",true),
+            LyricWord("thenextw",true),
             LyricWord("a",true),
             LyricWord("Small",true),
             LyricWord("Small",false),
@@ -67,5 +70,5 @@ fun LyricBoxPreview(){
             LyricWord("a",true),
         )
     )
-    LyricBox(lyricPreview)
+    LyricBox(lyricPreview, {} as (Int, String) -> Unit)
 }

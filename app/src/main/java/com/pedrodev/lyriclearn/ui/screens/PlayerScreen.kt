@@ -51,7 +51,11 @@ fun PlayerScreen(videoId: String) {
                         PlayerCard(video)
 
                         lyric?.let{ lyric ->
-                            LyricBox(lyric)
+                            LyricBox(
+                                lyric,
+                                onWordChange = { index, value ->
+                                viewModel.onWordChange(index, value)
+                            })
                         }
                     }
 
