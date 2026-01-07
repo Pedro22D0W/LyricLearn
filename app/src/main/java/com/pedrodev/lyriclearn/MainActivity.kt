@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.pedrodev.lyriclearn.ui.screens.FavoritesScreen
 import com.pedrodev.lyriclearn.ui.screens.HomeScreen
 import com.pedrodev.lyriclearn.ui.screens.PlayerScreen
 import com.pedrodev.lyriclearn.ui.theme.LyricLearnTheme
@@ -30,7 +31,7 @@ class MainActivity : ComponentActivity() {
                             navController.navigate("player/$videoId")
                         },
                             onNavigateToFavorites = {
-                                navController.navigate("favorites-screen")
+                                navController.navigate("favorite-screen")
                             }
                         )
                     }
@@ -49,6 +50,14 @@ class MainActivity : ComponentActivity() {
                     }
                         }
                     composable("favorite-screen") {
+                        FavoritesScreen(
+                            onNavigateToPlayer = {videoId ->
+                                navController.navigate("player/$videoId")
+                            },
+                            onNavigateToHome = {
+                                navController.navigate("home-screen")
+                            }
+                        )
 
                     }
                 }

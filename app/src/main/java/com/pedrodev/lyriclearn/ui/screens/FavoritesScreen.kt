@@ -10,30 +10,26 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pedrodev.lyriclearn.ui.components.BottomBar
 import com.pedrodev.lyriclearn.ui.components.SearchBar
 import com.pedrodev.lyriclearn.ui.components.SearchResult
-import com.pedrodev.lyriclearn.ui.vm.HomeScreenViewModel
-import com.pedrodev.lyriclearn.ui.vm.PlayerScreenViewModel
+import com.pedrodev.lyriclearn.ui.vm.FavoritesScreenViewModel
 
 @Composable
-fun HomeScreen(
+fun FavoritesScreen(
     onNavigateToPlayer: (String) -> Unit,
-    onNavigateToFavorites: () -> Unit
+    onNavigateToHome: () -> Unit
 ){
-    val viewModel: HomeScreenViewModel = hiltViewModel()
-    val playerViewModel: PlayerScreenViewModel = hiltViewModel()
-    val selectedVideo by playerViewModel.selectedVideo.collectAsState()
+
+    val viewModel : FavoritesScreenViewModel = hiltViewModel()
     val query by viewModel.query.collectAsState()
     val videos by viewModel.videos.collectAsState()
 
-
     Scaffold(
 
-        bottomBar = { BottomBar(tab = "home", onNavigate = {onNavigateToFavorites()} ) }
+        bottomBar = { BottomBar(tab = "favorites", onNavigate = {onNavigateToHome()} ) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -41,7 +37,7 @@ fun HomeScreen(
                 .padding(innerPadding)
                 .background(Color(0xFF121212))
         ) {
-            SearchBar(title = "Search",query = query, onQueryChange = viewModel::onQueryChange)
+            SearchBar(title = "Favorites",query = query, onQueryChange = viewModel::onQueryChange)
             Column(
                 modifier = Modifier.padding(vertical = 5.dp)
             ){
@@ -57,14 +53,4 @@ fun HomeScreen(
 
         }
     }
-}
-
-
-@Preview
-@Composable
-fun HomeScreenPreview(){
-    HomeScreen(
-        onNavigateToPlayer = {},
-        onNavigateToFavorites = {}
-    )
 }

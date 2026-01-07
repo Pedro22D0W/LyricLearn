@@ -1,5 +1,7 @@
 package com.pedrodev.lyriclearn.ui.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun BottomBar(){
+fun BottomBar(
+    tab:String,
+    onNavigate: () -> Unit){
     BottomAppBar(containerColor = Color(0xFF282828),
         contentColor = Color(0xFF717171),
         modifier = Modifier.height(100.dp)
@@ -30,26 +34,39 @@ fun BottomBar(){
         )
         {
             Column(
+                modifier = if (tab == "favorites") Modifier
+                    .clickable( onClick = {onNavigate()}) else Modifier,
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
 
             )
             {
-                Icon(imageVector = Icons.Default.Search,
-                    contentDescription = "Search page"
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search page",
+                    tint = if (tab == "home") Color(0xFFFFFFFF) else Color.Gray
                 )
-                Text(text = "Search")
+                Text(
+                    text = "Search",
+                    color = if(tab == "home") Color(0xFFFFFFFF) else Color.Gray
+                )
             }
             Column(
+                modifier = if (tab == "home") Modifier
+                    .clickable( onClick = {onNavigate()}) else Modifier,
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
 
             )
             {
                 Icon(imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "Library page"
+                    contentDescription = "Library page",
+                    tint = if(tab == "favorites") Color(0xFFFFFFFF) else Color.Gray
                 )
-                Text(text = "Favorites")
+                Text(
+                    text = "Favorites",
+                    color = if (tab == "favorites") Color(0xFFFFFFFF) else Color.Gray)
+
             }
 
         }
@@ -59,5 +76,5 @@ fun BottomBar(){
 @Preview
 @Composable
 fun ButtonBarPreview(){
-    BottomBar()
+    BottomBar(tab = "home",{})
 }

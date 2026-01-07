@@ -35,7 +35,6 @@ fun PlayerScreen(videoId: String) {
 
     Scaffold(
 
-        bottomBar = { BottomBar() }
     ) { innerPadding ->
         Column(
             modifier = Modifier
