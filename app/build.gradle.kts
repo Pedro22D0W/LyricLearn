@@ -96,9 +96,18 @@ dependencies {
     ksp("com.google.dagger:hilt-compiler:2.51.1")
 
     //navigation, to change screens
-    val nav_version = "2.9.6"
-    implementation("androidx.navigation:navigation-compose:$nav_version")
+    implementation("androidx.navigation:navigation-compose:2.9.6")
 
     //youtube player
     implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:13.0.0")
+
+    //Rooms to local database
+    implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    ksp("androidx.room:room-compiler:2.6.1")
+
+    //Animated navigation
+    implementation("com.google.accompanist:accompanist-navigation-animation:0.34.0")
+
 }

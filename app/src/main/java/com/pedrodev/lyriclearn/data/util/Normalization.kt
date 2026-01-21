@@ -5,7 +5,7 @@ import com.pedrodev.lyriclearn.data.dto.LyricRequestDto
 import com.pedrodev.lyriclearn.domain.models.Video
 
 fun normalizationTitleTrack(video: Video) : LyricRequestDto ?{
-    val delimiters = listOf("-", "(", "[",)
+    val delimiters = listOf("-", "(", "[",":")
 
     var title_frist_word = video.title.substringBefore("-")
     var title_second_word = video.title.substringAfter("-")

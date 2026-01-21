@@ -14,6 +14,10 @@ interface YoutubeApiService {
         @Query("maxResults") maxResults: Int = 10,
         @Query("q") query: String,
         @Query("pageToken") pageToken: String? = null,
+        @Query("videoCategoryId") category: String = "10",
+       
+
+
     ): SearchResponseDto
     @GET("youtube/v3/search")
     suspend fun searchVideoById(

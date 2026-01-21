@@ -4,8 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,7 +29,7 @@ fun FavoritesScreen(
 
     val viewModel : FavoritesScreenViewModel = hiltViewModel()
     val query by viewModel.query.collectAsState()
-    val videos by viewModel.videos.collectAsState()
+    val favorites by viewModel.favorites.collectAsState()
 
     Scaffold(
 
@@ -38,17 +42,22 @@ fun FavoritesScreen(
                 .background(Color(0xFF121212))
         ) {
             SearchBar(title = "Favorites",query = query, onQueryChange = viewModel::onQueryChange)
-            Column(
-                modifier = Modifier.padding(vertical = 5.dp)
-            ){
+            val scrollState = rememberScrollState()
 
-                for(video in videos) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(vertical = 5.dp)
+            ) {
+                for (video in favorites) {
                     SearchResult(
                         video = video,
-                        onClick = { onNavigateToPlayer(video.videoId)}
+                        onClick = { onNavigateToPlayer(video.videoId) }
                     )
                 }
             }
+
 
 
         }

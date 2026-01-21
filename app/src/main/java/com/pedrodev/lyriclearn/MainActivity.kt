@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,7 +27,15 @@ class MainActivity : ComponentActivity() {
             LyricLearnTheme {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "home-screen"){
-                    composable("home-screen") {
+                    composable(
+                        route = "home-screen",
+                        exitTransition = {
+                            slideOutOfContainer(
+                                AnimatedContentTransitionScope.SlideDirection.Right,
+                                tween { 1000F }
+                            )
+                        }
+                    ) {
                         HomeScreen(
                             onNavigateToPlayer = {videoId ->
                             navController.navigate("player/$videoId")

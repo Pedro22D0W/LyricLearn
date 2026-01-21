@@ -65,8 +65,24 @@ class PlayerScreenViewModel@Inject constructor(
                         }
                     )
                 } else {
-                    it // nenhuma mudança → nenhum emit → nenhuma recomposição
+                    it
                 }
+            }
+        }
+    }
+
+    fun favoriteSong() {
+        val video = _selectedVideo.value
+        val lyric = _lyric.value
+
+        if (video != null && lyric != null) {
+            val updatedVideo = video.copy(
+                favorited = true
+            )
+            _selectedVideo.value = updatedVideo
+
+            viewModelScope.launch {
+                videoRepository.saveVideo(video, lyric)
             }
         }
     }

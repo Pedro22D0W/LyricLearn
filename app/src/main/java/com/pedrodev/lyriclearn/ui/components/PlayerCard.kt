@@ -2,6 +2,7 @@ package com.pedrodev.lyriclearn.ui.components
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -26,7 +28,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.pedrodev.lyriclearn.domain.models.Video
 
 @Composable
-fun PlayerCard(video: Video){
+fun PlayerCard(video: Video, onFavorite: ()-> Unit){
     val lifecycleOwner = LocalLifecycleOwner.current
     Column(
         modifier = Modifier
@@ -68,8 +70,11 @@ fun PlayerCard(video: Video){
             Icon(
                 imageVector = Icons.Default.Favorite,
                 contentDescription = "Favorite",
-                tint = Color.Red,
-                modifier = Modifier.padding(start = 8.dp)
+                tint = if (video.favorited) Color.Red else Color.Gray,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .clickable(onClick = {onFavorite()})
+
             )
 
         }
@@ -86,5 +91,7 @@ fun PlayerCardPreview(){
         "7wtfhZwyrcc",
         "Imagine Dragons - Believer (Official Music Video)",
         "ImagineDragonsVEVO",
-        "https://i.ytimg.com/vi/7wtfhZwyrcc/mqdefault.jpg"))
+        "https://i.ytimg.com/vi/7wtfhZwyrcc/mqdefault.jpg"),
+        onFavorite = {}
+    )
 }
